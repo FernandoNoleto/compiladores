@@ -6,11 +6,29 @@
 
 using namespace std;
 
+bool menor_precedencia(char x, char y){
+    if(x == '+' && y == '*' || x == '+' && y == '/'){
+        return true;
+    }
+    else if(x == '-' && y == '*' || x == '-' && y == '/'){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 void in2pos(vector<char> posfixa){
     stack <char> pilha;
 
     for(vector<char>::iterator it = posfixa.begin(); it != posfixa.end(); it++) {
         if(*it == '+' || *it == '-' || *it == '*' || *it == '/'){
+            if(!pilha.empty()){
+                if(menor_precedencia(*it, pilha.top())){//Verifica precedência de operadores
+                    cout << pilha.top() << "";
+                    pilha.pop();
+                }
+            }
             pilha.push(*it);
         }
         else if(*it == ' '){
