@@ -22,7 +22,8 @@ void in2pos(vector<char> posfixa){
         }
         else if (*it == ')'){
             while(pilha.top() != '('){
-                cout << pilha.top() << "";
+                if(pilha.top() != '(')
+                    cout << pilha.top() << "";
                 pilha.pop();
             }
         }
@@ -33,7 +34,8 @@ void in2pos(vector<char> posfixa){
     }
     
     while(!pilha.empty()){
-        cout << pilha.top() << "";
+        if(pilha.top() != '(')
+            cout << pilha.top() << "";
         pilha.pop();
     }
 
