@@ -92,13 +92,13 @@ vector<char> tratar_expressao(string expr){
         if(expr[i] != ' '){
             if(expr[i] != '*' && expr[i] != '+' && expr[i] != '.' && expr[i] != '(' && expr[i] != ')' && aux != '*' && aux != '+' && aux != '.' && aux != '(' && aux != ')') //xx
                 expressao.push_back('.');
-            if(aux != '*' && aux != '+' && aux != '.' && expr[i] == '(') //x(
+            else if(aux != '*' && aux != '+' && aux != '.' && expr[i] == '(') //x(
                 expressao.push_back('.');
-            if(aux == ')' && expr[i] != '*' && expr[i] != '+' && expr[i] != '.') //)x
+            else if(aux == ')' && expr[i] != '*' && expr[i] != '+' && expr[i] != '.') //)x
                 expressao.push_back('.');
-            if(aux == '*' && expr[i] != '*' && expr[i] != '+' && expr[i] != '.') //*x
+            else if(aux == '*' && expr[i] != '*' && expr[i] != '+' && expr[i] != '.') //*x
                 expressao.push_back('.');
-            if(aux == ')' && expr[i] == '(') //)(
+            else if(aux == ')' && expr[i] == '(') //)(
                 expressao.push_back('.');
         }
         if(expr[i] != ' ')
