@@ -70,19 +70,22 @@ void in2pos(vector<char> expressao){
 
 }
 
-int main(){
-	#ifdef LINUX
-	system("clear");
-	#elif defined WIN32
-	system("cls");
-	#else
-	#error Plataforma não suportada
-	#endif
-    string expr; //expressão em string
-    vector<char> expressao; //expressão em vetor de caracteres
+bool validar_expressao(string expr){
+    
+    int count = 0;
+    for(int i = 0; i < expr.length(); i++){
+        if(expr[i] == '(')
+            count++;
+        if(expr[i] == ')')
+            count--;
+    }
+    
+    return (count == 0)? true : false;
+}
 
-    cout << "Digite uma palavra: ";
-    getline(cin, expr);
+vector<char> tratar_expressao(string expr){
+
+    vector<char> expressao; //expressão em vetor de caracteres //expressão já validada
 
     char aux = '+'; //aux é o caracter anterior
     for (int i = 0; i < expr.length(); i++) { //tratando a concatenação implícita
@@ -104,17 +107,46 @@ int main(){
     }
 
     for (vector<char>::iterator it = expressao.begin(); it != expressao.end(); it++){
-        cout << *it << " ";    
+        cout << *it;    
     }
     cout << "" << endl;
+
+    return expressao;
+}
+
+void limpar_tela(){
+    #ifdef LINUX
+	system("clear");
+	#elif defined WIN32
+	system("cls");
+	#endif
+}
+
+int main(){
+
+    limpar_tela();
+	
+    string expr; //expressão em string //entrada do usuário
+
+    cout << "Digite uma palavra: ";
+    getline(cin, expr);
+
+    if(!validar_expressao(expr)){//verificar número de abre e fecha parenteses
+        cout << "EXPRESSÃO INVÁLIDA!" << endl;
+        cout << "O número de abre e fecha parenteses é imcompatível" << endl;
+        return 0;
+    }
+
+    vector<char> expressao = tratar_expressao(expr);
     
+    //imprimir expressão já validada
     #ifdef LINUX
     cout << "Na notação posfixa: ";
     #elif defined WIN32
     cout << "Na notacao posfixa: ";
     #endif
 
-    in2pos(expressao);
+    in2pos(expressao);//função de coversão
 
     cout << "" << endl;
 
