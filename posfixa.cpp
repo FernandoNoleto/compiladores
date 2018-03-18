@@ -33,14 +33,15 @@ void in2pos(vector<char> expressao){
     vector <char> posfixa;
 
     for(vector<char>::iterator it = expressao.begin(); it != expressao.end(); it++) {
+        
         if(*it == '*' || *it == '+' || *it == '.'){ // Caso seja operador
-            //if(!pilha.empty()){
+            if(!pilha.empty()){
                 while(maior_precedencia(pilha.top(), *it)){//Verifica precedência de operadores
                     posfixa.push_back(pilha.top()); //copia o topo para a posfixa
                     pilha.pop();
                 }
                 //pilha.push(*it);
-            //}
+            }
             pilha.push(*it);
         }
         else if (*it == '('){ //Se for '(' então empilhe '('
@@ -51,7 +52,8 @@ void in2pos(vector<char> expressao){
                 posfixa.push_back(pilha.top());
                 pilha.pop();
             }
-            pilha.pop(); //Descartar o '('
+            if(pilha.top() == '(')
+                pilha.pop(); //Descartar o '('
         }
         else { //Caso seja operando
             posfixa.push_back(*it); //Copiar para a posfixa
@@ -96,7 +98,7 @@ vector<char> tratar_expressao(string expr){
                 expressao.push_back('.');
             else if(aux == ')' && expr[i] != '*' && expr[i] != '+' && expr[i] != '.') //)x
                 expressao.push_back('.');
-            else if(aux == '*' && expr[i] != '*' && expr[i] != '+' && expr[i] != '.') //*x
+            else if(aux == '*' && expr[i] != '*' && expr[i] != '+' && expr[i] != '.' && expr[i] != '(' && expr[i] != ')') //*x
                 expressao.push_back('.');
             else if(aux == ')' && expr[i] == '(') //)(
                 expressao.push_back('.');
