@@ -37,3 +37,8 @@ def teste():
         print("Teste (0+(1(01*(00)*0)*1)*)* = TRUE " + f_posfixa.expressao_perfeita("(0+(1(01*(00)*0)*1)*)*") + " PósFixa " + f_posfixa.polonesa_reversa("(0+(1.(0.1*.(0.0)*.0)*.1)*)*"))
     else:
         print("Teste (0+(1(01*(00)*0)*1)*)* = FALSE " + f_posfixa.expressao_perfeita("(0+(1(01*(00)*0)*1)*)*"))
+
+    if (f_posfixa.expressao_perfeita("\*(\+\(*\))\*") == "\*.(\+.\(*.\)).\*" and f_posfixa.polonesa_reversa("\*.(\+.\(*.\)).\*") == "\*\+\(*.\)..\*."):
+        print("Teste \*(\+\(*\))\* = TRUE " + f_posfixa.expressao_perfeita("\*(\+\(*\))\*") + " PósFixa " + f_posfixa.polonesa_reversa("\*.(\+.\(*.\)).\*"))
+    else:
+        print("Teste \*(\+\(*\))\* = FALSE " + f_posfixa.expressao_perfeita("\*(\+\(*\))\*"))
