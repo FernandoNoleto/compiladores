@@ -1,25 +1,30 @@
 ﻿import f_posfixa
 import testes
 
-'''Trabalho I de Thiago Silva Pereira e Fernando Noleto
+'''
+Trabalho I de Thiago Silva Pereira e Fernando Noleto
 Foi implementado o ponto extra do tratamento dos operadores como simbolo, basta usar \operador
 para funcionar espero que não dê bug...
 '''
+def entrada():
+    infix = input("Digite a expressão infixa\n")
+    infix = infix.replace(" ", "")
 
-infix = input("Digite a expressão infixa\n")
-infix = infix.replace(" ", "")
-
-if(infix.find('\\') == -1):
-    infix = infix.replace('.', '')
-    if (f_posfixa.expressao_valida(infix)):
-        print(f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix)))
+    if(infix.find('\\') == -1):
+        infix = infix.replace('.', '')
+        if (f_posfixa.expressao_valida(infix)):
+            print(f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix)))
+            return f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix))
+        else:
+            print("Expressão Inválida\n")
+            return False
     else:
-        print("Expressão Inválida\n")
-else:
-    if (f_posfixa.expressao_valida(infix)):
-        print(f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix)))
-    else:
-        print("Expressão Inválida\n")
+        if (f_posfixa.expressao_valida(infix)):
+            print(f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix)))
+            return f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix))
+        else:
+            print("Expressão Inválida\n")
+            return False
 
 #Essa função possui vários testes feitos para ser analisados, basta descomentar para visualizar
 #testes.teste()
