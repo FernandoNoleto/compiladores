@@ -130,7 +130,6 @@ class Automato(object):
         
         return automato
 
-
     
     def gerarAFND(self, posfixa):
         for i in range(len(posfixa)):
