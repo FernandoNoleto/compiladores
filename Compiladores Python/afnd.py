@@ -1,5 +1,4 @@
-import f_posfixa
-import main
+from f_posfixa import Posfixa
 
 class Automato(object):
  
@@ -194,9 +193,10 @@ class Automato(object):
 
 
 if __name__ == "__main__":
-    automato = Automato()
-    entrada = main.entrada()
-    if (entrada == False):
-        print("Entrada inválida")
-    else:
-        automato.gerarAFND(entrada)
+    pass
+    #automato = Automato()
+    #entrada = main.entrada()
+    #if (entrada == False):
+    #    print("Entrada inválida")
+    #else:
+    #    automato.gerarAFND(entrada)
