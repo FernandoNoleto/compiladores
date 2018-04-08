@@ -1,33 +1,54 @@
-﻿import f_posfixa
-import testes
+﻿#import f_posfixa
+from f_posfixa import Posfixa
+from afnd import Automato
+from testes import Teste
 
 '''
 Trabalho I de Thiago Silva Pereira e Fernando Noleto
 Foi implementado o ponto extra do tratamento dos operadores como simbolo, basta usar \operador
 para funcionar espero que não dê bug...
 '''
-def entrada():
+class Main(object):
+    def entrada(self, infix):
+        pos = Posfixa()
+        infix = infix.replace(" ", "")
+
+        if(infix.find('\\') == -1):
+            infix = infix.replace('.', '')
+            if (pos.expressao_valida(infix)):
+                print(pos.polonesa_reversa(pos.expressao_perfeita(infix)))
+                return pos.polonesa_reversa(pos.expressao_perfeita(infix))
+            else:
+                print("Expressão Inválida\n")
+                return False
+        else:
+            if (pos.expressao_valida(infix)):
+                print(pos.polonesa_reversa(pos.expressao_perfeita(infix)))
+                return pos.polonesa_reversa(pos.expressao_perfeita(infix))
+            else:
+                print("Expressão Inválida\n")
+                return False
+
+
+
+def main():
+    m = Main()
+    a = Automato()
     infix = input("Digite a expressão infixa\n")
-    infix = infix.replace(" ", "")
+    if(infix == ""):
+        print("Entrada inválida!")
+        return
+    a.gerarAFND(m.entrada(infix))
 
-    if(infix.find('\\') == -1):
-        infix = infix.replace('.', '')
-        if (f_posfixa.expressao_valida(infix)):
-            print(f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix)))
-            return f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix))
-        else:
-            print("Expressão Inválida\n")
-            return False
-    else:
-        if (f_posfixa.expressao_valida(infix)):
-            print(f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix)))
-            return f_posfixa.polonesa_reversa(f_posfixa.expressao_perfeita(infix))
-        else:
-            print("Expressão Inválida\n")
-            return False
+if __name__ == "__main__":
+    
+    main()
 
-#Essa função possui vários testes feitos para ser analisados, basta descomentar para visualizar
-#testes.teste()
+    #Essa função possui vários testes feitos para serem analisados, basta descomentar
+    #as 2 linhas abaixo para visualizar
+    
+    #t = Teste()
+    #t.teste()
 
 
 
