@@ -29,8 +29,6 @@ class Main(object):
                 print("Expressão Inválida\n")
                 return False
 
-
-
 def main():
     m = Main()
     a = Automato()
