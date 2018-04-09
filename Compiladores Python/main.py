@@ -1,5 +1,4 @@
-﻿#import f_posfixa
-from f_posfixa import Posfixa
+﻿from f_posfixa import Posfixa
 from afnd import Automato
 from testes import Teste
 
@@ -16,14 +15,16 @@ class Main(object):
         if(infix.find('\\') == -1):
             infix = infix.replace('.', '')
             if (pos.expressao_valida(infix)):
-                print(pos.polonesa_reversa(pos.expressao_perfeita(infix)))
+                print("\nNa posfixa:")
+                print(pos.polonesa_reversa(pos.expressao_perfeita(infix)), "\n")
                 return pos.polonesa_reversa(pos.expressao_perfeita(infix))
             else:
                 print("Expressão Inválida\n")
                 return False
         else:
             if (pos.expressao_valida(infix)):
-                print(pos.polonesa_reversa(pos.expressao_perfeita(infix)))
+                print("Na posfixa:")
+                print(pos.polonesa_reversa(pos.expressao_perfeita(infix)), "\n")
                 return pos.polonesa_reversa(pos.expressao_perfeita(infix))
             else:
                 print("Expressão Inválida\n")

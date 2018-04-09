@@ -1,4 +1,5 @@
 from f_posfixa import Posfixa
+import pprint
 
 class Automato(object):
  
@@ -33,7 +34,6 @@ class Automato(object):
         base = Automato()
         base.alfabeto.append(simbolo)
         base.qtEstados = 2
-        base.estados = [base.qtEstados]
         base.estados.append(0)
         base.estados.append(1)
         base.matrizDeTransicao[(0, simbolo)] = 1
@@ -57,11 +57,11 @@ class Automato(object):
         novo.matrizDeTransicao = automato1.matrizDeTransicao.copy()
         for i in automato2.matrizDeTransicao.keys():
             try:
-                novo.matrizDeTransicao[ (i[0]+automato1.qtEstados, i[1] ) ] = automato2.matrizDeTransicao.get(i) + automato1.qtEstados
-            except :
+                novo.matrizDeTransicao[(i[0]+automato1.qtEstados, i[1])] = automato2.matrizDeTransicao.get(i) + automato1.qtEstados
+            except:
                 b = list(automato2.matrizDeTransicao.get(i))
-                lista = [x+automato1.qtEstados for x in b]
-                novo.matrizDeTransicao[ (i[0]+automato1.qtEstados, i[1] ) ] = tuple(lista)
+                lista = [x + automato1.qtEstados for x in b]
+                novo.matrizDeTransicao[(i[0] + automato1.qtEstados, i[1])] = tuple(lista)
             
 
         novo.matrizDeTransicao[(automato1.qtEstados-1, '&')] = automato1.qtEstados
@@ -70,8 +70,8 @@ class Automato(object):
         novo.estadoFinal = novo.qtEstados-1
         novo.qtEstadosFinais = 1
         
-        print("estado inicial:", novo.estadoInicial)
-        print("estado final:", novo.estadosFinais)
+        #print("estado inicial:", novo.estadoInicial)
+        #print("estado final:", novo.estadosFinais)
 
         return novo
     
@@ -80,7 +80,7 @@ class Automato(object):
         novo_automato = Automato()
         novo_automato.alfabeto = self.uniao_alfabetos([""], automato.alfabeto)
 
-        novo_automato.qtd_estados = automato.qtEstados + 2
+        novo_automato.qtEstados = automato.qtEstados + 2
         # preenchendo os estados do novo automato 
         for i in range(len(automato.estados)):
             novo_automato.estados.append(i)
@@ -88,24 +88,18 @@ class Automato(object):
         # preenchendo as transicoes do automato1 no automato novo
         for i in automato.matrizDeTransicao.keys():
             try:
-                novo_automato.matrizDeTransicao[ (i[0]+1, i[1] ) ] = automato.matrizDeTransicao.get(i) + (novo_automato.qtEstados - automato.qtEstados) - 1
+                novo_automato.matrizDeTransicao[(i[0] + 1, i[1])] = automato.matrizDeTransicao.get(i) + (novo_automato.qtEstados - automato.qtEstados) - 1
             except :
-                print(i)
                 b = list(automato.matrizDeTransicao.get(i))
-                print(b)
-                print("automato com lista de transicoes")
                 lista = [x+1 for x in b]
-                print('transicoes ',lista)
-                novo_automato.matrizDeTransicao[ (i[0]+1, i[1] ) ] = tuple(lista)
-                print( novo_automato.matrizDeTransicao[ (i[0]+1, i[1] ) ] )
+                novo_automato.matrizDeTransicao[(i[0] + 1, i[1])] = tuple(lista)
         
-        novo_automato.matrizDeTransicao[(0,'&')] = (1,novo_automato.qtEstados-1)
-        novo_automato.matrizDeTransicao[(automato.qtEstados,'&')] = (novo_automato.qtEstados - automato.qtEstados -1, novo_automato.qtEstados-1)
-
+        novo_automato.matrizDeTransicao[(0,'&')] = (1, novo_automato.qtEstados - 1)
+        novo_automato.matrizDeTransicao[(automato.qtEstados,'&')] = (novo_automato.qtEstados - automato.qtEstados - 1, novo_automato.qtEstados - 1)
 
 
         novo_automato.estadoInicial = 0
-        novo_automato.estadosFinais = novo_automato.qtEstados-1
+        novo_automato.estadosFinais = novo_automato.qtEstados - 1
         novo_automato.qtEstadosFinais = 1
          
         return novo_automato
@@ -123,44 +117,37 @@ class Automato(object):
 
         for i in automato1.matrizDeTransicao.keys():
             try:
-                automato.matrizDeTransicao[(i[0]+1, i[1])] = automato1.matrizDeTransicao.get(i) + 1
-                print(automato.matrizDeTransicao)
-            except TypeError :
-                print(automato1.matrizDeTransicao.get(i))
+                automato.matrizDeTransicao[(i[0] + 1, i[1])] = automato1.matrizDeTransicao.get(i) + 1
+            except TypeError:
                 b = list(automato1.matrizDeTransicao.get(i))
                 lista = [x+1 for x in b]
-                automato.matrizDeTransicao[ (i[0]+1, i[1] ) ] = tuple(lista)
-        print("Transicao 1", automato.matrizDeTransicao)
+                automato.matrizDeTransicao[(i[0] + 1, i[1])] = tuple(lista)
         
         
         for i in automato2.matrizDeTransicao.keys():
             try: 
-                automato.matrizDeTransicao[ (i[0]+automato1.qtEstados + 1, i[1] ) ] = automato2.matrizDeTransicao.get(i) + automato1.qtEstados + 1
-            except TypeError :
+                automato.matrizDeTransicao[(i[0] + automato1.qtEstados + 1, i[1])] = automato2.matrizDeTransicao.get(i) + automato1.qtEstados + 1
+            except TypeError:
                 b = list(automato2.matrizDeTransicao.get(i))
-                lista = [x+automato1.qtEstados + 1 for x in b]
-                automato.matrizDeTransicao[ (i[0]+automato1.qtEstados + 1, i[1] ) ] = tuple(lista)
-        print("Transicao 2", automato.matrizDeTransicao)
+                lista = [x + automato1.qtEstados + 1 for x in b]
+                automato.matrizDeTransicao[(i[0] + automato1.qtEstados + 1, i[1])] = tuple(lista)
         
         
-        print (automato1.qtEstados)
         if ((automato1.qtEstados, '&')) in automato.matrizDeTransicao.keys():
-            automato.matrizDeTransicao[(automato1.qtEstados,'&')] = automato1.matrizDeTransicao.get((automato1.qtEstados, '&')), automato.qtEstados-1
+            automato.matrizDeTransicao[(automato1.qtEstados, '&')] = automato1.matrizDeTransicao.get((automato1.qtEstados, '&')), automato.qtEstados - 1
         else:
-            automato.matrizDeTransicao[(automato1.qtEstados,'&')] = automato.qtEstados-1
-        print("Transicao if 1", automato.matrizDeTransicao)
+            automato.matrizDeTransicao[(automato1.qtEstados,'&')] = automato.qtEstados - 1
         
         
-        print (automato2.qtEstados+automato1.qtEstados)
-        if (automato2.qtEstados+automato1.qtEstados, '&') in automato.matrizDeTransicao.keys():
-            automato.matrizDeTransicao[( automato2.qtd_estado+automato1.qtEstados,'&')] = automato2.matrizDeTransicao.get((automato2.qtEstados+automato1.qtEstados, '&')), automata.qtEstados-1
+        if (automato2.qtEstados + automato1.qtEstados, '&') in automato.matrizDeTransicao.keys():
+            automato.matrizDeTransicao[(automato2.qtEstados + automato1.qtEstados, '&')] = automato2.matrizDeTransicao.get((automato2.qtEstados + automato1.qtEstados, '&')), automato.qtEstados - 1
         else:
-            automato.matrizDeTransicao[(automato2.qtEstados + automato1.qtEstados,'&')] = automato.qtEstados-1
-        print("Transicao if 2", automato.matrizDeTransicao)
+            automato.matrizDeTransicao[(automato2.qtEstados + automato1.qtEstados,'&')] = automato.qtEstados - 1
+        
 
         automato.estado_inicial = 0
-        automato.estado_final = automato.qtEstados-1
-        automato.qtd_estado_final = 1
+        automato.estado_final = automato.qtEstados - 1
+        automato.qtEstadosFinais = 1
         
         return automato
 
@@ -174,21 +161,23 @@ class Automato(object):
             else:
                 if self.pilhaAutomato:
                     if simbolo == '*':
-                        self.pilhaAutomato.append(self.fechoDeKleene(self.pilhaAutomato.pop()) )
-                    elif self.pilhaAutomato :
+                        self.pilhaAutomato.append(self.fechoDeKleene(self.pilhaAutomato.pop()))
+                    elif self.pilhaAutomato:
                         op2 = self.pilhaAutomato.pop()
                         op1 = self.pilhaAutomato.pop()
-                        if simbolo == "+":
-                            print("Uniao")
-                            self.pilhaAutomato.append(self.uniao(op1,op2) )
+                        if simbolo == "+":                         
+                            self.pilhaAutomato.append(self.uniao(op1,op2))
                         elif simbolo == '.':
-                            print("Concatenacao")
-                            self.pilhaAutomato.append(self.concatenacao(op1,op2) )
+                            self.pilhaAutomato.append(self.concatenacao(op1,op2))
         
         afn = self.pilhaAutomato.pop()
-        print(afn.matrizDeTransicao)
+        afn.matrizDeTransicao[(len(afn.matrizDeTransicao), ' ')] = ' '
+        
+        pprint.pprint(afn.matrizDeTransicao)
+        print("\nEstado Inicial: 0")
+        print("Estado Final: ", len(afn.matrizDeTransicao) - 1, "\n")
         if not self.pilhaAutomato:
-            print(afn)
+            pprint.pprint(afn)
         return afn.matrizDeTransicao
 
 
