@@ -1,6 +1,7 @@
 ﻿from f_posfixa import Posfixa
 from afnd import Automato
 from testes import Teste
+from afd import AutomatoFinito
 
 '''
 Trabalho I de Thiago Silva Pereira e Fernando Noleto
@@ -37,7 +38,17 @@ def main():
     if(infix == ""):
         print("Entrada inválida!")
         return
-    a.gerarAFND(m.entrada(infix))
+    matrizDeTransicao = a.gerarAFND(m.entrada(infix))
+    
+    #-------------trabalho 3---------------#
+    af = AutomatoFinito()
+    #todos os fechos-&
+    for i in range(len(matrizDeTransicao)):
+        af.fechoDeKleene(matrizDeTransicao, i)
+    
+    af.transicoes(matrizDeTransicao)
+
+    #-------------trabalho 3---------------#
 
 if __name__ == "__main__":
     
