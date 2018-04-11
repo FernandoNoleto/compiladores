@@ -38,15 +38,19 @@ def main():
     if(infix == ""):
         print("Entrada inválida!")
         return
-    matrizDeTransicao = a.gerarAFND(m.entrada(infix))
+    
+    #automato finito não determinístico com movimento vazio
+    afn = a.gerarAFND(m.entrada(infix))
     
     #-------------trabalho 3---------------#
     af = AutomatoFinito()
-    #todos os fechos-&
-    for i in range(len(matrizDeTransicao)):
-        af.fechoDeKleene(matrizDeTransicao, i)
     
-    af.transicoes(matrizDeTransicao)
+    #imprimir todos os fechos-&
+    for i in range(len(afn.matrizDeTransicao)):
+        af.fechoE(afn.matrizDeTransicao, i)
+    
+    #af.transicoes(afn.matrizDeTransicao)
+    af.gerarAFD(afn)
 
     #-------------trabalho 3---------------#
 
