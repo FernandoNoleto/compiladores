@@ -45,35 +45,35 @@ class Automato(object):
     
     #2 automatos como parâmetro. Automato 1 e Automato 2
     def concatenacao(self, automato1, automato2):
-        novo = Automato()
-        novo.alfabeto = self.uniao_alfabetos(automato1.alfabeto, automato2.alfabeto)
-        novo.qtEstados = automato1.qtEstados + automato2.qtEstados
+        automato = Automato()
+        automato.alfabeto = self.uniao_alfabetos(automato1.alfabeto, automato2.alfabeto)
+        automato.qtEstados = automato1.qtEstados + automato2.qtEstados
 
-        novo.estados = automato1.estados.copy()
+        automato.estados = automato1.estados.copy()
         for i in range(len(automato2.estados)):
-            novo.estados.append(automato1.qtEstados + automato2.estados[i])
+            automato.estados.append(automato1.qtEstados + automato2.estados[i])
 
 
-        novo.matrizDeTransicao = automato1.matrizDeTransicao.copy()
+        automato.matrizDeTransicao = automato1.matrizDeTransicao.copy()
         for i in automato2.matrizDeTransicao.keys():
             try:
-                novo.matrizDeTransicao[(i[0]+automato1.qtEstados, i[1])] = automato2.matrizDeTransicao.get(i) + automato1.qtEstados
+                automato.matrizDeTransicao[(i[0]+automato1.qtEstados, i[1])] = automato2.matrizDeTransicao.get(i) + automato1.qtEstados
             except:
                 b = list(automato2.matrizDeTransicao.get(i))
                 lista = [x + automato1.qtEstados for x in b]
-                novo.matrizDeTransicao[(i[0] + automato1.qtEstados, i[1])] = tuple(lista)
+                automato.matrizDeTransicao[(i[0] + automato1.qtEstados, i[1])] = tuple(lista)
             
 
-        novo.matrizDeTransicao[(automato1.qtEstados-1, '&')] = automato1.qtEstados
+        automato.matrizDeTransicao[(automato1.qtEstados-1, '&')] = automato1.qtEstados
 
-        novo.estadoInicial = 0
-        novo.estadoFinal = novo.qtEstados-1
-        novo.qtEstadosFinais = 1
+        automato.estadoInicial = 0
+        automato.estadosFinais = automato.qtEstados-1
+        automato.qtEstadosFinais = 1
         
-        #print("estado inicial:", novo.estadoInicial)
-        #print("estado final:", novo.estadosFinais)
+        #print("estado inicial:", automato.estadoInicial)
+        #print("estado final:", automato.estadosFinais)
 
-        return novo
+        return automato
     
     #fecho de kleene 
     def fechoDeKleene(self, automato):
@@ -82,10 +82,10 @@ class Automato(object):
 
         novo_automato.qtEstados = automato.qtEstados + 2
         # preenchendo os estados do novo automato 
-        for i in range(len(automato.estados)):
+        for i in range(novo_automato.qtEstados):
             novo_automato.estados.append(i)
 
-        # preenchendo as transicoes do automato1 no automato novo
+        # preenchendo as transicoes do automato no automato novo
         for i in automato.matrizDeTransicao.keys():
             try:
                 novo_automato.matrizDeTransicao[(i[0] + 1, i[1])] = automato.matrizDeTransicao.get(i) + (novo_automato.qtEstados - automato.qtEstados) - 1
@@ -145,13 +145,13 @@ class Automato(object):
             automato.matrizDeTransicao[(automato2.qtEstados + automato1.qtEstados,'&')] = automato.qtEstados - 1
         
 
-        automato.estado_inicial = 0
-        automato.estado_final = automato.qtEstados - 1
+        automato.estadoInicial = 0
+        automato.estadosFinais = automato.qtEstados - 1
         automato.qtEstadosFinais = 1
         
         return automato
 
-    
+    '''
     #Função de gerenciamento do automato dado a entrada da posfixa
     def gerarAFND(self, posfixa):
         for i in range(len(posfixa)):
@@ -174,11 +174,41 @@ class Automato(object):
         afn.matrizDeTransicao[(len(afn.matrizDeTransicao), ' ')] = ' '
         
         pprint.pprint(afn.matrizDeTransicao)
-        print("\nEstado Inicial: 0")
-        print("Estado Final: ", len(afn.matrizDeTransicao) - 1, "\n")
+        print("\nEstado Inicial: ", afn.estadoInicial)
+        print("Estado Final: ", afn.estadosFinais, "\n")
         if not self.pilhaAutomato:
             pprint.pprint(afn)
         return afn.matrizDeTransicao
+    '''
+
+    #Função de gerenciamento do automato dado a entrada da posfixa
+    def gerarAFND(self, posfixa):
+        for i in range(len(posfixa)):
+            simbolo = posfixa[i]
+            if self.ehOperando(simbolo):
+                self.pilhaAutomato.append(self.base(simbolo))
+            else:
+                if self.pilhaAutomato:
+                    if simbolo == '*':
+                        self.pilhaAutomato.append(self.fechoDeKleene(self.pilhaAutomato.pop()))
+                    elif self.pilhaAutomato:
+                        op2 = self.pilhaAutomato.pop()
+                        op1 = self.pilhaAutomato.pop()
+                        if simbolo == "+":                         
+                            self.pilhaAutomato.append(self.uniao(op1,op2))
+                        elif simbolo == '.':
+                            self.pilhaAutomato.append(self.concatenacao(op1,op2))
+        
+        afn = self.pilhaAutomato.pop()
+        afn.matrizDeTransicao[(len(afn.matrizDeTransicao), ' ')] = ' '
+        
+        pprint.pprint(afn.matrizDeTransicao)
+        print("\nEstado Inicial: ", afn.estadoInicial)
+        print("Estado Final: ", afn.estadosFinais, "\n")
+        if not self.pilhaAutomato:
+            pprint.pprint(afn)
+        return afn
+
 
 
 if __name__ == "__main__":
