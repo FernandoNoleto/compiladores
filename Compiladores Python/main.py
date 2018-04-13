@@ -50,6 +50,10 @@ def main():
         af.fechoE(afn.matrizDeTransicao, i)
     
     #af.transicoes(afn.matrizDeTransicao)
+    for i in afn.alfabeto:
+        if i == '':
+            afn.alfabeto.remove('')
+
     af.gerarAFD(afn)
 
     #-------------trabalho 3---------------#
