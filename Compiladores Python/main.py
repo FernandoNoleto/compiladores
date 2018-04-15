@@ -45,10 +45,6 @@ def main():
     #-------------trabalho 3---------------#
     af = AutomatoFinito()
     
-    #imprimir todos os fechos-&
-    for i in range(len(afn.matrizDeTransicao)):
-        af.fechoE(afn.matrizDeTransicao, i)
-    
     #af.transicoes(afn.matrizDeTransicao)
     for i in afn.alfabeto:
         if i == '':
