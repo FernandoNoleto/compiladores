@@ -202,6 +202,8 @@ class Automato(object):
         afn = self.pilhaAutomato.pop()
         afn.matrizDeTransicao[(len(afn.matrizDeTransicao), ' ')] = ' '
         
+        print('---------------TRABALHO 2----------------')
+        
         pprint.pprint(afn.matrizDeTransicao)
         print("\nEstado Inicial: ", afn.estadoInicial)
         print("Estado Final: ", afn.estadosFinais, "\n")

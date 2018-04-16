@@ -41,8 +41,6 @@ class AutomatoFinito(Automato):
 
         return fecho
     
-    def uniaoDeEstados(self, estados):
-        pass
     
     #passo o fechoE e retorno o estado a qual ele pertence
     def fechoE_reverso(self, matrizDeTransicao, fecho):
@@ -76,9 +74,9 @@ class AutomatoFinito(Automato):
                 #print(automato.matrizDeTransicao.get(i))
                 return automato.matrizDeTransicao.get(i)
         
-        #return " "
 
 
+    '''
     def lista_esta_no_dicionario(self, lista, dicionario):
         flag = False
         c = 0
@@ -98,7 +96,8 @@ class AutomatoFinito(Automato):
         dicionario.update({chave: valor})
 
         return dicionario
-    
+    '''
+
     def estado_equivalente(self, dicionario, lista):
         for k, v in dicionario.items():
             if lista == v:
@@ -134,7 +133,7 @@ class AutomatoFinito(Automato):
                 afd.estadosFinais.append(q)
 
         #indução
-        #i = 
+        #i = estados internos do fechoE
         #j = simbolo do alfabeto
         #k = estados internos (lista retornada do fechoE)
         #o = 1
@@ -186,14 +185,20 @@ class AutomatoFinito(Automato):
         
         
         
-        print('-----------------------------------------')
+        print('---------------TRABALHO 3----------------')
         
         #imprimir todos os fechos-&
         for i in range(len(automato.matrizDeTransicao)):
-            print('fechoE(', i, ') = ', self.fechoE(automato.matrizDeTransicao, i))
+            print('fechoE(', i, ') =', self.fechoE(automato.matrizDeTransicao, i))
+        
+        print('')
         
         pprint.pprint(afd.matrizDeTransicao)
+        
+        print('')
 
-        print('estado inicial: ', afd.estadoInicial)
-        print('estados finais: ', afd.estadosFinais)
+        print('Estado Inicial: ', afd.estadoInicial)
+        print('Estados Finais: ', afd.estadosFinais)
+
+        return afd
                 

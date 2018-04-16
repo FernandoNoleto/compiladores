@@ -32,13 +32,21 @@ class Main(object):
                 return False
 
 def main():
+
+    #-------------trabalho 1---------------#
+
     m = Main()
     a = Automato()
     infix = input("Digite a expressão infixa\n")
     if(infix == ""):
         print("Entrada inválida!")
         return
+
+    print('---------------TRABALHO 1----------------')
     
+
+    #-------------trabalho 2---------------#
+
     #automato finito não determinístico com movimento vazio
     afn = a.gerarAFND(m.entrada(infix))
     
@@ -52,7 +60,7 @@ def main():
 
     af.gerarAFD(afn)
 
-    #-------------trabalho 3---------------#
+
 
 if __name__ == "__main__":
     
