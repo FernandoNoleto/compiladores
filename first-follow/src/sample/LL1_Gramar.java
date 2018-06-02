@@ -44,7 +44,7 @@ public class LL1_Gramar {
     }
 
     private void calcFirstFollow(){//Percorrer todas as regras de produções
-        print("First: ");
+        print("FIRST: ");
         for(String s: P.keySet()){
             if(!First.containsKey(s)){
                 First.put(s, GetFirst(s));

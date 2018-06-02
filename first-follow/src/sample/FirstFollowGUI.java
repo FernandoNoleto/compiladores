@@ -27,6 +27,9 @@ public class FirstFollowGUI {
 
     public FirstFollowGUI(){
 
+        //this.setLocationRelativeTo(null);
+        //panelMain.setlo
+
         setDataButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
