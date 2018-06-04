@@ -45,7 +45,7 @@ class Posfixa(object):
 
         if(operador2 == '*' and (operador_atual == '+' or operador_atual == '.')):
             return True
-        elif((operador2 == operador_atual)):
+        elif((operador2 == operador_atual) and operador2 != '('):
             return True
         elif((operador_atual == '.') and (operador2 == '*')):
             return True
